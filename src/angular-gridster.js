@@ -1561,7 +1561,6 @@
 					if (hasCallback || oldRow !== item.row || oldCol !== item.col) {
 						scope.$apply(function() {
 						    if (hasCallback) {
-
 						        var elementResized = dragStartSizeX !== item.sizeX || dragStartSizeY !== item.sizeY;
 						        gridster.draggable.drag(event, $el, itemOptions, item, elementResized);
 							}
@@ -1573,7 +1572,7 @@
 				    $el.removeClass('gridster-item-moving');
 				    if (gridster.resizeOnMove) {
 				        $el.css({
-				            'opacity': '0.5'
+				            'opacity': '1'
 				        });
 				    }
 				    var row = 0;
