@@ -1568,15 +1568,46 @@
 				}
 
 				function dragStop(event) {
-					$el.removeClass('gridster-item-moving');
-					var row = Math.min(gridster.pixelsToRows(elmY), gridster.maxRows - 1);
-					var col = Math.min(gridster.pixelsToColumns(elmX), gridster.columns - 1);
+				    $el.removeClass('gridster-item-moving');
+				    if (gridster.resizeOnMove) {
+				        $el.css({
+				            'opacity': '0.5'
+				        });
+				    }
+				    var row = 0;
+				    var col = 0;
+				    if (gridster.resizeOnMove) {
+				        col = gridster.pixelsToColumns(event.pageX - mouseStartOffsetX);
+				        row = gridster.pixelsToRows(event.pageY - mouseStartOffsetY);
+
+				        if (col < 0) {
+				            col = 0;
+				        } else if (col + gridster.minSizeX > gridster.columns) {
+				            col = gridster.columns - gridster.minSizeX;
+				        }
+				        if (row < 0) {
+				            row = 0;
+				        } else if (row + gridster.minSizeY > gridster.rows) {
+				            row = gridster.rows - gridster.minSizeY;
+				        }
+				    } else {
+				        row = Math.min(gridster.pixelsToRows(elmY), gridster.maxRows - 1);
+				        col = Math.min(gridster.pixelsToColumns(elmX), gridster.columns - 1);
+				    }
+
 					if (gridster.pushing !== false || gridster.getItems(row, col, item.sizeX, item.sizeY, item).length === 0) {
 						item.row = row;
 						item.col = col;
 					}
-					gridster.movingItem = null;
-					item.setPosition(item.row, item.col);
+					gridster.movingItem = null; if (gridster.resizeOnMove) {
+					    item.setSizeY(item.sizeY);
+					    item.setSizeX(item.sizeX);
+					    item.setPosition(item.row, item.col);
+					} else {
+					    item.setPosition(item.row, item.col);
+					    item.setSizeY(item.sizeY);
+					    item.setSizeX(item.sizeX);
+					}
 
 					scope.$apply(function() {
 						if (gridster.draggable && gridster.draggable.stop) {
