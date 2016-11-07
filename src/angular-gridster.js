@@ -1646,6 +1646,7 @@
 		            }
 
 		            var maxLeft = gridster.curWidth - 1;
+		            var maxTop = 0;
 		            if (gridster.maxRows != null) {
 		                maxTop = gridster.rowsToPixels(gridster.maxRows) + (gridster.outerMargin ? +gridster.margins[0] : gridster.margins[0]) - 2;
 		            }
