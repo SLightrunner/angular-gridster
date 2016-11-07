@@ -1459,6 +1459,8 @@
 					$el.addClass('gridster-item-moving');
 					gridster.movingItem = item;
 
+					dragStartSizeX = item.sizeX;
+					dragStartSizeY = item.sizeY;
 					gridster.updateHeight(item.sizeY);
 					scope.$apply(function() {
 						if (gridster.draggable && gridster.draggable.start) {
@@ -1468,6 +1470,8 @@
 				}
 
 				function drag(event) {
+				    item.sizeX = dragStartSizeX
+				    item.sizeY = dragStartSizeY;
 					var oldRow = item.row,
 						oldCol = item.col,
 						hasCallback = gridster.draggable && gridster.draggable.drag,
@@ -1476,11 +1480,30 @@
 
 					var row = Math.min(gridster.pixelsToRows(elmY), gridster.maxRows - 1);
 					var col = Math.min(gridster.pixelsToColumns(elmX), gridster.columns - 1);
+					if (gridster.resizeOnMove) {
+					    col = gridster.pixelsToColumns(event.pageX - mouseStartOffsetX);
+					    row = gridster.pixelsToRows(event.pageY - mouseStartOffsetY);
 
+					    if (col < 0) {
+					        col = 0;
+					    } else if (col + gridster.minSizeX > gridster.columns) {
+					        col = gridster.columns - gridster.minSizeX;
+					    }
+					    if (row < 0) {
+					        row = 0;
+					    } else if (row + gridster.minSizeY > gridster.rows) {
+					        row = gridster.rows - gridster.minSizeY;
+					    }
+					}
 					var itemsInTheWay = gridster.getItems(row, col, item.sizeX, item.sizeY, item);
 					var hasItemsInTheWay = itemsInTheWay.length !== 0;
 
-					if (gridster.swapping === true && hasItemsInTheWay) {
+					if (gridster.resizeOnMove) {
+					    if (hasItemsInTheWay) {
+					        tryFitSize(row, col);
+					    }
+					    tryResizeAtEdge(row, col);
+					} else if (gridster.swapping === true && hasItemsInTheWay) {
 						var boundingBoxItem = gridster.getBoundingBox(itemsInTheWay),
 							sameSize = boundingBoxItem.sizeX === item.sizeX && boundingBoxItem.sizeY === item.sizeY,
 							sameRow = boundingBoxItem.row === oldRow,
