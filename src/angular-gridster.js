@@ -1572,7 +1572,7 @@
 				    $el.removeClass('gridster-item-moving');
 				    if (gridster.resizeOnMove) {
 				        $el.css({
-				            'opacity': '1'
+				            'opacity': '1' 
 				        });
 				    }
 				    var row = 0;
