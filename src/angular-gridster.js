@@ -1599,7 +1599,9 @@
 						item.row = row;
 						item.col = col;
 					}
-					gridster.movingItem = null; if (gridster.resizeOnMove) {
+					var elementResized = dragStartSizeX !== item.sizeX || dragStartSizeY !== item.sizeY;
+					gridster.movingItem = null;
+					if (gridster.resizeOnMove) {
 					    item.setSizeY(item.sizeY);
 					    item.setSizeX(item.sizeX);
 					    item.setPosition(item.row, item.col);
@@ -1611,7 +1613,7 @@
 
 					scope.$apply(function() {
 						if (gridster.draggable && gridster.draggable.stop) {
-							gridster.draggable.stop(event, $el, itemOptions, item);
+						    gridster.draggable.stop(event, $el, itemOptions, item, elementResized);
 						}
 					});
 				}
