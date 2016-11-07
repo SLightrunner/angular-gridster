@@ -1,6 +1,10 @@
 {
 	"name": "angular-gridster",
+<<<<<<< HEAD
+	"version": "0.13.6",
+=======
 	"version": "0.13.14",
+>>>>>>> d0618b39348be7f7fc46ec96e351a328c74c382b
 	"description": "This directive gives you gridster behavior",
 	"license": "MIT",
 	"homepage": "http://manifestwebdesign.github.io/angular-gridster",
