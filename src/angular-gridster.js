@@ -1560,8 +1560,10 @@
 
 					if (hasCallback || oldRow !== item.row || oldCol !== item.col) {
 						scope.$apply(function() {
-							if (hasCallback) {
-								gridster.draggable.drag(event, $el, itemOptions, item);
+						    if (hasCallback) {
+
+						        var elementResized = dragStartSizeX !== item.sizeX || dragStartSizeY !== item.sizeY;
+						        gridster.draggable.drag(event, $el, itemOptions, item, elementResized);
 							}
 						});
 					}
