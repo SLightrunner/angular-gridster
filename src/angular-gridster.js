@@ -874,6 +874,8 @@
 		                    $rootScope.$broadcast('gridster-resized', [width, $elem[0].offsetHeight], gridster);
 		                };
 
+		                gridster.resize = resize;
+
 		                // track element width changes any way we can
 		                var onResize = gridsterDebounce(function onResize() {
 		                    resize();
