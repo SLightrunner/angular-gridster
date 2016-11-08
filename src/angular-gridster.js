@@ -1472,7 +1472,7 @@
 				}
 
 				function drag(event) {
-				    item.sizeX = dragStartSizeX
+				    item.sizeX = dragStartSizeX;
 				    item.sizeY = dragStartSizeY;
 					var oldRow = item.row,
 						oldCol = item.col,
@@ -1876,15 +1876,6 @@
 		                }
 		                gridster.putItem(item, row, col);
 		            }
-		        }
-
-		        function needResize(row, col) {
-		            if (gridster.getItems(row, col, item.sizeX, item.sizeY, item).length === 0) {
-		                if (row + item.sizeY > gridster.rows || col + item.sizeX > gridster.columns) {
-		                    return true;
-		                }
-		            }
-		            return false;
 		        }
 
 		        var enabled = null;
